@@ -1,16 +1,7 @@
 #!/bin/bash
-clear
-#Benutzer kann zwischen den Befehlen mit den Shortcuts d,c,n und q auswaehlen
-echo "Bitte geben Sie einen Befehl ein."
-echo ""
-echo "Es stehen diese Befehle zur Verfuegung:
-->d: delete, Partition loeschen
-->c: create, Partition anlegen
-->n: new, Speicherbelegeung zuruecksetzen
-->q: quit, Simulation beenden"
-#Der ausgewaehlte Befehl wird eingelesen
-       read -r befehl
-       #Die if-Anweisung ueberprueft welcher Befehl ausgefuehrt werden soll
+#Funktion fuer Steuerung des Simulators bei der Eingabe von c,d oder n
+simulationssteuerung () {
+       #Die if-Anweisung ueberprueft, welcher Befehl ausgefuehrt werden soll
        if [ "$befehl" = "c" ]; then
                 #Wenn der Befehl create entspricht, wird nun die Abfrage nach dem Namen und anschliessend nach der Groesse gestartet
                 #Die Variablen createPartitionsName und createPartitionsGroesse speichern den Namen bzw. die jeweilige Groesse bis zu dem eingegebenen c
@@ -72,14 +63,13 @@ echo "Es stehen diese Befehle zur Verfuegung:
                 #Visuelle Ausgabe des Speichers und die Informationen zur Speicherbelegung
 	#Wenn der Befehl new gewaehlt wurde, wird nun ausgegeben, dass die Speicherbelegung zurueckgesetzt wurde und die jetzige Speicherbelegung wird ausgegeben
         elif [ "$befehl" = "n" ]; then
+		#./unsetElement
                 echo "Die Speicherbelegung wurde zurueckgesetzt. Sie sieht jetzt wie folgt aus: "
                 #Visuelle Ausgabe des Speichers und die Informationen zur Speicherbelegung
-	#Wenn der Befehl quit gewaehlt wurde, wird nun ausgegeben, dass der Simulator beendet wurde
-        elif [ "$befehl" = "q" ]; then
-                echo "Der Simulator wurde beendet."
 	#Wenn keiner der vier vorherigen Befehle eingegeben wurde, wird eine Fehlermeldung ausgegeben und die derzeitige Speicherbelegung
         else
                 echo "Es wurde ein ungueltiger Befehl eingegeben."
                 echo "Die Speicherbelegung sieht wie folgt aus: "
                 #Visuelle Ausgabe des Speichers und die Informationen zur Speicherbelegung
         fi
+}
