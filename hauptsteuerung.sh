@@ -23,19 +23,20 @@ array_gesamte_groesse=($gewaehlteGesamtspeichergroesse)
 
 echo ""
 echo ""
-#Benutzer wird aufgefordert, das Realisierungskonzept auszuwaehlen, es gibt die Wahl zwischen den Shortcuts f,b,n,w und r
+#Benutzer wird aufgefordert, das Realisierungskonzept auszuwaehlen, es gibt die Wahl zwischen den Shortcuts f,b,n,w,r und l
 echo "Bitte geben Sie ein, welches Realisierungskonzept genutzt werden soll. Es stehen folgenden Realisierungskonzepte zur Verfuegung:
 -> f (First Fit)
 -> b (Best Fit)
 -> n (Next Fit)
 -> w (Worst Fit)
--> r (Random)"
+-> r (Random)
+-> l (Last Fit)"
 #Das ausgewaehlte Konzept wird eingelesen
 read -r konzept
 	#Als Quelle wird die Datei simulationssteuerungFunktionen.sh angegeben
 	#Es wird ueberprueft, ob die Eingabe einem der Realisierungskonzepte entspricht oder ob erneut nach einer Eingabe gefragt wird
 	source ./simulationssteuerungFunktionen.sh
-	while ! { [ "$konzept" = "f" ] || [ "$konzept" = "b" ] || [ "$konzept" = "n" ] || [ "$konzept" = "w" ] || [ "$konzept" = "r" ]; }
+	while ! { [ "$konzept" = "f" ] || [ "$konzept" = "b" ] || [ "$konzept" = "n" ] || [ "$konzept" = "w" ] || [ "$konzept" = "r" ] || [ "$konzept" = "l" ]; }
 	do
 		ungueltigesRealisierungskonzept konzept
 		read -r konzept
@@ -50,88 +51,123 @@ read -r konzept
 		#Die Funktion abfrageAktion wird von der angegebenen Quelle simulationssteuerungFunktionen.sh aufgerufen
                 abfrageAktion
                 #Der Befehl wird eingelesen
-		#Wenn nicht der Befehl quit (q) gewaehlt wird der ausgewaehlte Befehl nach dem gewaehlten Realisierungskonzept ausgefuehrt (in diesem Fall First Fit)
+		#Nachdem der jeweilige Befehl ausgefuehrt wurde (alle moeglich ausser q), wird auf die Datei firstfit.sh als Quelle verwiesen, wo die Eingaben weiter verarbeitet werden in der Funktion insertFirstFit
+ 		#Der Funktion werden dabei zwei Arrays uebergeben
+                #Nachdem die Funktion ausgefuehrt wurde, wird erneut nach einer Eingabe gefragt
                 read -r befehl
                         while [ "$befehl" != "q" ]
                         do
                                 ablaufRealisierungskonzept befehl
+				source ./firstfit.sh
+				insertFirstFit array_name_groesse array_gesamte_groesse
                                 abfrageAktion
                                 read -r befehl
-                                #./firstfit.sh
                         done
                 #Wenn der Befehl quit gewaehlt wurde, wird nun ausgegeben, dass der Simulator beendet wurde und im Hintergrund wird die Speicherbelegung zurueckgesetzt
-                #./unsetElement
+                #Funktion zum Zuruecksetzen des Speichers
                 echo "Der Simulator wurde beendet."
 	#Es wurde das Konzept Best Fit ausgewaehlt
 	elif [ "$konzept" = "b" ]; then
 		echo "Ihr gewaehltes Konzept ist: Best Fit."
 		#Die Funktion abfrageAktion wird von der angegebenen Quelle simulationssteuerungFunktionen.sh aufgerufen
-		#Wenn nicht der Befehl quit (q) gewaehlt wird der ausgewaehlte Befehl nach dem gewaehlten Realisierungskonzept ausgefuehrt (in diesem Fall Best Fit)
                 abfrageAktion
                 #Der Befehl wird eingelesen
+		#Nachdem der jeweilige Befehl ausgefuehrt wurde (alle moeglich ausser q), wird auf die Datei bestfit.sh als Quelle verwiesen, wo die Eingaben weiter verarbeitet werden in der Funktion insertBestFit
+		#Der Funktion werden dabei zwei Arrays uebergeben
+                #Nachdem die Funktion ausgefuehrt wurde, wird erneut nach einer Eingabe gefragt
                 read -r befehl
                         while [ "$befehl" != "q" ]
                         do
                                 ablaufRealisierungskonzept befehl
+				source ./bestfit.sh
+				insertBestFit array_name_groesse array_gesamte_groesse
                                 abfrageAktion
                                 read -r befehl
-                                #./bestfit.sh
                         done
                 #Wenn der Befehl quit gewaehlt wurde, wird nun ausgegeben, dass der Simulator beendet wurde und im Hintergrund wird die Speicherbelegung zurueckgesetzt
-                #./unsetElement
+                #Funktion zum Zuruecksetzen des Speichers
                 echo "Der Simulator wurde beendet."
 	#Es wurde das Konzept Next Fit ausgewaehlt
 	elif [ "$konzept" = "n" ]; then
 		echo "Ihr gewaehltes Konzept ist: Next Fit."
 		#Die Funktion abfrageAktion wird von der angegebenen Quelle simulationssteuerungFunktionen.sh aufgerufen
-		#Wenn nicht der Befehl quit (q) gewaehlt wird der ausgewaehlte Befehl nach dem gewaehlten Realisierungskonzept ausgefuehrt (in diesem Fall Next Fit)
                 abfrageAktion
                 #Der Befehl wird eingelesen
+		#Nachdem der jeweilige Befehl ausgefuehrt wurde (alle moeglich ausser q), wird auf die Datei nextfit.sh als Quelle verwiesen, wo die Eingaben weiter verarbeitet werden in der Funktion insertNextFit
+		#Der Funktion werden dabei zwei Arrays uebergeben
+                #Nachdem die Funktion ausgefuehrt wurde, wird erneut nach einer Eingabe gefragt
                 read -r befehl
                         while [ "$befehl" != "q" ]
                         do
                                 ablaufRealisierungskonzept befehl
+				source ./nextfit.sh
+				insertNextFit array_name_groesse array_gesamte_groesse
                                 abfrageAktion
                                 read -r befehl
-                                #./nextfit.sh
                         done
                 #Wenn der Befehl quit gewaehlt wurde, wird nun ausgegeben, dass der Simulator beendet wurde und im Hintergrund wird die Speicherbelegung zurueckgesetzt
-                #./unsetElement
+                #Funktion zum Zuruecksetzen des Speichers
                 echo "Der Simulator wurde beendet."
 	#Es wurde das Konzept Worst Fit ausgewaehlt
 	elif [ "$konzept" = "w" ]; then
 		echo "Ihr gewaehltes Konzept ist: Worst Fit."
 		#Die Funktion abfrageAktion wird von der angegebenen Quelle simulationssteuerungFunktionen.sh aufgerufen
-		#Wenn nicht der Befehl quit (q) gewaehlt wird der ausgewaehlte Befehl nach dem gewaehlten Realisierungskonzept ausgefuehrt (in diesem Fall Worst Fit)
                 abfrageAktion
                 #Der Befehl wird eingelesen
+		#Nachdem der jeweilige Befehl ausgefuehrt wurde (alle moeglich ausser q), wird auf die Datei worstfit.sh als Quelle verwiesen, wo die Eingaben weiter verarbeitet werden in der Funktion insertWorstFit
+		#Der Funktion werden dabei zwei Arrays uebergeben
+                #Nachdem die Funktion ausgefuehrt wurde, wird erneut nach einer Eingabe gefragt
                 read -r befehl
                         while [ "$befehl" != "q" ]
                         do
                                 ablaufRealisierungskonzept befehl
+				source ./worstfit.sh
+				insertWorstFit array_name_groesse array_gesamte_groesse
                                 abfrageAktion
                                 read -r befehl
-                                #./worstfit.sh
                         done
                 #Wenn der Befehl quit gewaehlt wurde, wird nun ausgegeben, dass der Simulator beendet wurde und im Hintergrund wird die Speicherbelegung zurueckgesetzt
-                #./unsetElement
+                #Funktion zum Zuruecksetzen des Speichers
                 echo "Der Simulator wurde beendet."
 	#Es wurde das Konzept Random ausgewaehlt
 	elif [ "$konzept" = "r" ]; then
 		echo "Ihr gewaehltes Konzept ist: Random."
 		#Die Funktion abfrageAktion wird von der angegebenen Quelle simulationssteuerungFunktionen.sh aufgerufen
-		#Wenn nicht der Befehl quit (q) gewaehlt wird der ausgewaehlte Befehl nach dem gewaehlten Realisierungskonzept ausgefuehrt (in diesem Fall Random)
 		abfrageAktion
 		#Der Befehl wird eingelesen
+		#Nachdem der jeweilige Befehl ausgefuehrt wurde (alle moeglich ausser q), wird auf die Datei random.sh als Quelle verwiesen, wo die Eingaben weiter verarbeitet werden in der Funktion insertRandom
+		#Der Funktion werden dabei zwei Arrays uebergeben
+		#Nachdem die Funktion ausgefuehrt wurde, wird erneut nach einer Eingabe gefragt
        		read -r befehl
                 	while [ "$befehl" != "q" ]
                 	do
                 		ablaufRealisierungskonzept befehl
+				source ./random.sh
+				insertRandom array_name_groesse array_gesamte_groesse
 				abfrageAktion
 				read -r befehl
-                		#./random.sh
                 	done
                 #Wenn der Befehl quit gewaehlt wurde, wird nun ausgegeben, dass der Simulator beendet wurde und im Hintergrund wird die Speicherbelegung zurueckgesetzt
-                #./unsetElement
+                #Funktion zum Zuruecksetzen des Speichers
+                echo "Der Simulator wurde beendet."
+	elif [ "$konzept" = "l" ]; then
+                echo "Ihr gewaehltes Konzept ist: Last Fit."
+                #Die Funktion abfrageAktion wird von der angegebenen Quelle simulationssteuerungFunktionen.sh aufgerufen
+                abfrageAktion
+                #Der Befehl wird eingelesen
+		#Nachdem der jeweilige Befehl ausgefuehrt wurde (alle moeglich ausser q), wird auf die Datei lastfit.sh als Quelle verwiesen, wo die Eingaben weiter verarbeitet werden in der Funktion insertLastFit
+		#Der Funktion werden dabei zwei Arrays uebergeben
+                #Nachdem die Funktion ausgefuehrt wurde, wird erneut nach einer Eingabe gefragt
+                read -r befehl
+                        while [ "$befehl" != "q" ]
+                        do
+                                ablaufRealisierungskonzept befehl
+                                source ./lastfit.sh
+                                insertLastFit array_name_groesse array_gesamte_groesse
+                                abfrageAktion
+                                read -r befehl
+                        done
+                #Wenn der Befehl quit gewaehlt wurde, wird nun ausgegeben, dass der Simulator beendet wurde und im Hintergrund wird die Speicherbelegung zurueckgesetzt
+                #Funktion zum Zuruecksetzen des Speichers
                 echo "Der Simulator wurde beendet."
 	fi
