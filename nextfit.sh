@@ -1,27 +1,12 @@
 #!/bin/bash
 
 
-function insertFirstFit(){
+function insertNextFit(){
     seekName=$1 #der zu speichernde Name des Prozesses
     seekGroesse=$2 #die zu speichernde Groesse des Prozesses
     summe=0 #Hier wird die Summe der belegten Speicherblöcke hinterlegt
 
     echo ">>>Das ist seekName: $seekName ;;; Das ist seekGroesse: $seekGroesse"
-
-#    summeNeu=0
-#    wastedCounter=0
-#    secCounter=1
-#    for i in ${groesse[@]}
-#    do
-#	if [[ $i -ne $wastedCounter || $secCounter -eq $i ]]; then
-#	    let summeNeu+=$i
-#	    secCounter=$((secCounter+1))
-#	fi
-#	echo "sNeu: $summeNeu"
-#	#echo "i: $i"
-#    done
-
-
 
     for i in ${groesse[@]} #Durch alle Array Inhalte vom Array groesse loopen
     do
@@ -34,7 +19,7 @@ function insertFirstFit(){
     fi
 
     seekCounter=0 #Counter der die freien Plätze beinhaltet
-    for (( i=0; i<=$speicherplatz; i++ )) #Schleife in der Größe des Speicherplatzes
+    for (( i=$start; i<=$speicherplatz; i++ )) #Schleife in der Größe des Speicherplatzes
     do
 	if [[ -z "${speicher[$i]}" ]]; then #Wenn die i-te Stelle im Speicher leer ist
 	    seekCounter=$((seekCounter+1)) #Aufeinander folgende leere Plätze werden hochgezählt
@@ -47,6 +32,13 @@ function insertFirstFit(){
 		done
 		groesse[$index]=$seekGroesse #Größe an der Stelle im Array einfügen
 		name[$index]=$seekName #Name an der Stelle im Array einfügen
+
+		if [[ $((i+1)) -le $speicherplatz ]]; then
+		    start=$((i+1))
+		else
+		    start=0
+		fi
+
 		return 1 #Erfolgreich -> Raus
 	    fi
 	else
@@ -60,12 +52,19 @@ function insertFirstFit(){
 #speicherplatz=${array_gesamte_groesse} #größe des Speichers
 speicherplatz=10
 echo ">>>Speicherplatz: $speicherplatz"
+start=0
 #unset name
 #unset groesse
 #unset speicher
-insertFirstFit "HALLOWELT" 1
-insertFirstFit "NEUEWELT" 3
-insertFirstFit "3Stelle" 5
+insertNextFit "HALLOWELT" 1
+insertNextFit "NEUEWELT" 3
+insertNextFit "3Stelle" 5
+speicher[1]=
+speicher[2]=
+speicher[3]=
+groesse[1]=
+name[1]=
+insertNextFit "amende" 1
 #insertFirstFit "META" 5
 #createPartitionsName=${createPartitionsName/ c*/}
 #${createPartitionsGroesse/ c*/}
