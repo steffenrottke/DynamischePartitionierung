@@ -5,10 +5,6 @@ function insertWorstFit(){
     seekGroesse=$3
     summe=0 #Hier wird die Summe der belegten Speicherblöcke hinterlegt
 
-    speicher[4]=2
-    speicher[5]=2
-    speicher[8]=1
-
     echo ">>>Das ist speicherplatz: $speicherplatz ;;; seekName: $seekName ;;; Das ist seekGroesse: $(($seekGroesse))"
 
     for i in ${groesse[@]} #Durch alle Array Inhalte vom Array groesse loopen
