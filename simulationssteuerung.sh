@@ -56,14 +56,17 @@ simulationssteuerung () {
 				done
 			deletePartitionsName=$(frageNachNameBestaetigt)
                 echo "Die ausgewaehlte Partition ist: $deletePartitionsName."
-		#Array mit der gewaehlten Eingabe zum Namen
-		array_name=($deletePartitionsName)
+		#Die Datei unsetElement wird aufgruefen, die wiederum die Funktion unsetElement beinhaltet, die fuer das Loeschen einer Partition zustaendig ist und den Namen, den Speicher und die Groesse uebergeben bekommt
+		source ./unsetElement.sh
+		unsetElement "$deletePartitionsName" save_speicher save_groesse
                 #Ausgabe der Speicherbelegung
                 echo "Die Speicherbelegung sieht wie folgt aus: "
                 #Visuelle Ausgabe des Speichers und die Informationen zur Speicherbelegung
 	#Wenn der Befehl new gewaehlt wurde, wird nun ausgegeben, dass die Speicherbelegung zurueckgesetzt wurde und die jetzige Speicherbelegung wird ausgegeben
         elif [ "$befehl" = "n" ]; then
-		#./unsetElement
+		#Die Datei simulationssteuerungFunktionen wird aufgerufen, um auf die Funktion speicherZuruecksetzen zuzugreifen, die den Namen, die Groesse und den Speicher uebergeben bekommt und alle bisher erstellten Partitionen loescht und somit den Speicher auf seine urspruengliche Groesse zuruecksetzt
+		source ./simulationssteuerungFunktionen.sh
+		speicherZuruecksetzen save_name save_groesse save_speicher
                 echo "Die Speicherbelegung wurde zurueckgesetzt. Sie sieht jetzt wie folgt aus: "
                 #Visuelle Ausgabe des Speichers und die Informationen zur Speicherbelegung
 	#Wenn keiner der vier vorherigen Befehle eingegeben wurde, wird eine Fehlermeldung ausgegeben und die derzeitige Speicherbelegung

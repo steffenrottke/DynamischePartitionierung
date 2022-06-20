@@ -51,16 +51,18 @@ read -r konzept
 		#Die Funktion abfrageAktion wird von der angegebenen Quelle simulationssteuerungFunktionen.sh aufgerufen
                 abfrageAktion
                 #Der Befehl wird eingelesen
-		#Nachdem der jeweilige Befehl ausgefuehrt wurde (alle moeglich ausser q), wird auf die Datei firstfit.sh als Quelle verwiesen, wo die Eingaben weiter verarbeitet werden in der Funktion insertFirstFit
- 		#Der Funktion werden dabei zwei Arrays uebergeben
+		#Es wird die Funktion ablaufRealisierungskonzept aufgerufen und der eingelesene Befehl uebergeben
+		#Nachdem der jeweilige Befehl ausgefuehrt wurde (alle moeglich ausser q), wird auf die Datei firstfit.sh als Quelle verwiesen, wo die Eingaben weiter verarbeitet werden in der Funktion insertFirstFit, die aufgerufen wird, wenn der Befehl ein c ist
+ 		#Der Funktion werden dabei drei Werte uebergeben
                 #Nachdem die Funktion ausgefuehrt wurde, wird erneut nach einer Eingabe gefragt
                 read -r befehl
                         while [ "$befehl" != "q" ]
                         do
                                 ablaufRealisierungskonzept befehl
 				source ./firstfit.sh
-				#insertFirstFit array_name_groesse array_gesamte_groesse
+				if [ "$befehl" = "c" ]; then
 				insertFirstFit $gewaehlteGesamtspeichergroesse "$createPartitionsName" $createPartitionsGroesse
+				fi
                                 abfrageAktion
                                 read -r befehl
                         done
@@ -73,20 +75,18 @@ read -r konzept
 		#Die Funktion abfrageAktion wird von der angegebenen Quelle simulationssteuerungFunktionen.sh aufgerufen
                 abfrageAktion
                 #Der Befehl wird eingelesen
-		#Nachdem der jeweilige Befehl ausgefuehrt wurde (alle moeglich ausser q), wird auf die Datei bestfit.sh als Quelle verwiesen, wo die Eingaben weiter verarbeitet werden in der Funktion insertBestFit
-		#Der Funktion werden dabei zwei Arrays uebergeben
+		#Es wird die Funktion ablaufRealisierungskonzept aufgerufen und der eingelesene Befehl uebergeben
+		#Nachdem der jeweilige Befehl ausgefuehrt wurde (alle moeglich ausser q), wird auf die Datei bestfit.sh als Quelle verwiesen, wo die Eingaben weiter verarbeitet werden in der Funktion insertBestFit, wenn der Befehl ein c ist
+		#Der Funktion werden dabei drei Werte uebergeben
                 #Nachdem die Funktion ausgefuehrt wurde, wird erneut nach einer Eingabe gefragt
                 read -r befehl
                         while [ "$befehl" != "q" ]
                         do
                                 ablaufRealisierungskonzept befehl
 				source ./bestfit.sh
-				echo "***********************"
-				echo "Speicher: $gewaehlteGesamtspeichergroesse"
-				echo "Name: $createPartitionsName"
-				echo "Groesse: $createPartitionsGroesse"
-				echo "************************"
-				insertBestFit $gewaehlteGesamtspeichergroesse "$createPartitionsName" $createPartitionsGroesse
+				if [ "$befehl" = "c" ]; then
+                                insertBestFit $gewaehlteGesamtspeichergroesse "$createPartitionsName" $createPartitionsGroesse
+                                fi
                                 abfrageAktion
                                 read -r befehl
                         done
@@ -99,16 +99,18 @@ read -r konzept
 		#Die Funktion abfrageAktion wird von der angegebenen Quelle simulationssteuerungFunktionen.sh aufgerufen
                 abfrageAktion
                 #Der Befehl wird eingelesen
-		#Nachdem der jeweilige Befehl ausgefuehrt wurde (alle moeglich ausser q), wird auf die Datei nextfit.sh als Quelle verwiesen, wo die Eingaben weiter verarbeitet werden in der Funktion insertNextFit
-		#Der Funktion werden dabei zwei Arrays uebergeben
+		#Es wird die Funktion ablaufRealisierungskonzept aufgerufen und der eingelesene Befehl uebergeben
+		#Nachdem der jeweilige Befehl ausgefuehrt wurde (alle moeglich ausser q), wird auf die Datei nextfit.sh als Quelle verwiesen, wo die Eingaben weiter verarbeitet werden in der Funktion insertNextFit, wenn der eingegebene Befehl ein c ist
+		#Der Funktion werden dabei drei Werte uebergeben
                 #Nachdem die Funktion ausgefuehrt wurde, wird erneut nach einer Eingabe gefragt
                 read -r befehl
                         while [ "$befehl" != "q" ]
                         do
                                 ablaufRealisierungskonzept befehl
 				source ./nextfit.sh
-				#insertNextFit array_name_groesse array_gesamte_groesse
-				insertNextFit $gewaehlteGesamtspeichergroesse "$createPartitionsName" $createPartitionsGroesse
+				if [ "$befehl" = "c" ]; then
+                                insertNextFit $gewaehlteGesamtspeichergroesse "$createPartitionsName" $createPartitionsGroesse
+                                fi
                                 abfrageAktion
                                 read -r befehl
                         done
@@ -121,16 +123,18 @@ read -r konzept
 		#Die Funktion abfrageAktion wird von der angegebenen Quelle simulationssteuerungFunktionen.sh aufgerufen
                 abfrageAktion
                 #Der Befehl wird eingelesen
-		#Nachdem der jeweilige Befehl ausgefuehrt wurde (alle moeglich ausser q), wird auf die Datei worstfit.sh als Quelle verwiesen, wo die Eingaben weiter verarbeitet werden in der Funktion insertWorstFit
-		#Der Funktion werden dabei zwei Arrays uebergeben
+		#Es wird die Funktion ablaufRealisierungskonzept aufgerufen und der eingelesene Befehl uebergeben
+		#Nachdem der jeweilige Befehl ausgefuehrt wurde (alle moeglich ausser q), wird auf die Datei worstfit.sh als Quelle verwiesen, wo die Eingaben weiter verarbeitet werden in der Funktion insertWorstFit, wenn der Befehl ein c ist
+		#Der Funktion werden dabei drei Werte uebergeben
                 #Nachdem die Funktion ausgefuehrt wurde, wird erneut nach einer Eingabe gefragt
                 read -r befehl
                         while [ "$befehl" != "q" ]
                         do
                                 ablaufRealisierungskonzept befehl
 				source ./worstfit.sh
-				#insertWorstFit array_name_groesse array_gesamte_groesse
-				insertWorstFit $gewaehlteGesamtspeichergroesse "$createPartitionsName" $createPartitionsGroesse
+				if [ "$befehl" = "c" ]; then
+                                insertWorstFit $gewaehlteGesamtspeichergroesse "$createPartitionsName" $createPartitionsGroesse
+                                fi
                                 abfrageAktion
                                 read -r befehl
                         done
@@ -143,16 +147,18 @@ read -r konzept
 		#Die Funktion abfrageAktion wird von der angegebenen Quelle simulationssteuerungFunktionen.sh aufgerufen
 		abfrageAktion
 		#Der Befehl wird eingelesen
-		#Nachdem der jeweilige Befehl ausgefuehrt wurde (alle moeglich ausser q), wird auf die Datei random.sh als Quelle verwiesen, wo die Eingaben weiter verarbeitet werden in der Funktion insertRandom
-		#Der Funktion werden dabei zwei Arrays uebergeben
+		#Es wird die Funktion ablaufRealisierungskonzept aufgerufen und der eingelesene Befehl uebergeben
+		#Nachdem der jeweilige Befehl ausgefuehrt wurde (alle moeglich ausser q), wird auf die Datei random.sh als Quelle verwiesen, wo die Eingaben weiter verarbeitet werden in der Funktion insertRandom, wenn der Befehl ein c ist
+		#Der Funktion werden dabei drei Werte uebergeben
 		#Nachdem die Funktion ausgefuehrt wurde, wird erneut nach einer Eingabe gefragt
        		read -r befehl
                 	while [ "$befehl" != "q" ]
                 	do
                 		ablaufRealisierungskonzept befehl
-				source ./randomfit.sh
-				#insertRandom array_name_groesse array_gesamte_groesse
-				insertRandomFit $gewaehlteGesamtspeichergroesse "$createPartitionsName" $createPartitionsGroesse
+				source ./random.sh
+				if [ "$befehl" = "c" ]; then
+                                insertRandomFit $gewaehlteGesamtspeichergroesse "$createPartitionsName" $createPartitionsGroesse
+                                fi
 				abfrageAktion
 				read -r befehl
                 	done
@@ -164,16 +170,16 @@ read -r konzept
                 #Die Funktion abfrageAktion wird von der angegebenen Quelle simulationssteuerungFunktionen.sh aufgerufen
                 abfrageAktion
                 #Der Befehl wird eingelesen
-		#Nachdem der jeweilige Befehl ausgefuehrt wurde (alle moeglich ausser q), wird auf die Datei lastfit.sh als Quelle verwiesen, wo die Eingaben weiter verarbeitet werden in der Funktion insertLastFit
-		#Der Funktion werden dabei zwei Arrays uebergeben
+		#Es wird die Funktion ablaufRealisierungskonzept aufgerufen und der eingelesene Befehl uebergeben
+		#Nachdem der jeweilige Befehl ausgefuehrt wurde (alle moeglich ausser q), wird auf die Datei lastfit.sh als Quelle verwiesen, wo die Eingaben weiter verarbeitet werden in der Funktion insertLastFit, wenn der Befehl ein c ist
+		#Der Funktion werden dabei drei Werte uebergeben
                 #Nachdem die Funktion ausgefuehrt wurde, wird erneut nach einer Eingabe gefragt
                 read -r befehl
                         while [ "$befehl" != "q" ]
                         do
                                 ablaufRealisierungskonzept befehl
                                 source ./lastfit.sh
-                                #insertLastFit array_name_groesse array_gesamte_groesse
-				insertLastFit $gewaehlteGesamtspeichergroesse "$createPartitionsName" $createPartitionsGroesse
+                                insertLastFit $gewaehlteGesamtspeichergroesse "$createPartitionsName" $createPartitionsGroesse
                                 abfrageAktion
                                 read -r befehl
                         done

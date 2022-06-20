@@ -105,7 +105,7 @@ echo "Bitte geben Sie einen Befehl ein. Es stehen diese Befehle zur Verfuegung:
 
 #Funktion, um gesamten Speicher zurueckzusetzen
 speicherZuruecksetzen () {
-	unset name
-	unset groesse
-	unset speicher
+	unset save_name
+	unset save_groesse
+	unset save_speicher
 }
