@@ -1,9 +1,11 @@
 #!/bin/bash
-function insertLastFit(){
+function insertNextFit(){
     save_speicherplatz=$1
     seekName=$2 #der zu speichernde Name des Prozesses
     seekGroesse=$3 #die zu speichernde Groesse des Prozesses
     summe=0 #Hier wird die Summe der belegten Speicherblöcke hinterlegt
+
+    #echo ">>>Das ist seekName: $seekName ;;; Das ist seekGroesse: $seekGroesse"
 
     for i in ${save_groesse[@]} #Durch alle Array Inhalte vom Array groesse loopen
     do
@@ -15,22 +17,27 @@ function insertLastFit(){
 	return 0
     fi
 
+    start=0
     seekCounter=0 #Counter der die freien Plätze beinhaltet
-    for (( i=$(($save_speicherplatz-1)); i>=0; i-- )) #Schleife in der Größe des Speicherplatzes
+    for (( i=$start; i<=$save_speicherplatz; i++ )) #Schleife in der Größe des Speicherplatzes
     do
 	if [[ -z "${save_speicher[$i]}" ]]; then #Wenn die i-te Stelle im Speicher leer ist
-	    seekCounter=$(($seekCounter+1)) #Aufeinander folgende leere Plätze werden hochgezählt
+	    seekCounter=$((seekCounter+1)) #Aufeinander folgende leere Plätze werden hochgezählt
 	    if [[ $seekCounter -ge $seekGroesse ]]; then #Wenn der counter der leeren Plätze größer/gleich der unterzubnrGröße 
-		index=$(($i+$seekGroesse-1))
-		useless=1
-		for (( y=$index; $useless<=$seekGroesse; y--))
+		index=$(($i-($seekCounter-1)))
+		#groesse[$index]=$seekGroesse #Größe an der Stelle im Array einfügen
+		for (( y=$index; y<$(($index+$seekGroesse)); y++ ))
 		do
-		    #echo "index: $index ;;; useless: $useless ;;; sG: $seekGroesse ;;; y: $y"
 		    save_speicher[$y]=$seekGroesse
-		    useless=$((useless+1))
 		done
 		save_groesse[$index]=$seekGroesse #Größe an der Stelle im Array einfügen
 		save_name[$index]=$seekName #Name an der Stelle im Array einfügen
+
+		if [[ $(($i+1)) -le $save_speicherplatz ]]; then
+		    start=$((i+1))
+		else
+		    start=0
+		fi
 		break
 	    fi
 	else
@@ -38,6 +45,16 @@ function insertLastFit(){
 	fi
     done
 
+#echo "Speicher:"
+#echo ${save_speicher[*]}
+#echo "--------"
+#echo "--------"
+#echo "Groesse:"
+#echo ${save_groesse[*]}
+#echo "++++++++"
+#echo "++++++++"
+#echo "Name:"
+#echo ${save_name[*]}
 #    echo "Speicher:"
 #    unset $speicherout
 #    for (( i=0; i<$save_speicherplatz; i++ ))
