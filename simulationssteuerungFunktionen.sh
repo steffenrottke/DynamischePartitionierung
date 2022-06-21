@@ -109,3 +109,40 @@ speicherZuruecksetzen () {
 	unset save_groesse
 	unset save_speicher
 }
+
+#Funktion zum ueberpruefen, dass zwei Partitionen nicht gleich benannt werden koennen
+pruefenAufGleichenNamen () {
+	#Uebergebene Werte
+	partitionsName=$1
+	array=$arrayMitBisherigenNamen
+
+	#Alle Array-Elemente werden durchgegangen
+	for i in "${array[@]}";
+	do
+		#Es wird solange nach einem Namen fuer die Partition gefragt, bis ein noch nicht vergebener eingegeben wurde
+		while [[ "$i" =~ "$partitionsName" ]]
+		do
+			pruefungName partitionsName
+			#Der neu eingegebene Name wird zum neuen Partitionsnamen
+			partitionsName=$name
+			#Der Partitionsname wird zu createPartitionsName
+			createPartitionsName=$partitionsName
+		done
+	done
+}
+
+#Funktion zum ueberpruefen, damit ein Partitionsname nicht doppelt vergeben wird -> wird fuer Funktion pruefenAufGleichenNamen benoetigt
+pruefungName () {
+if [[ "$i" =~ "$partitionsName" ]]; then
+        echo 'Mit diesem Namen wurde bereits eine andere Partition benannt. Bitte geben Sie erneut einen Namen ein und bestaetigen Sie mit " c".'
+	read -r name
+	#Der neu eingegebene Name wird ueberprueft, ob er mit einem c bestaetigt wurde
+        while [[ ! "$name" =~ " c" ]]
+	do
+		frageNachNameNichtBestaetigt name
+		read -r name
+	done
+	#Der Name wird an die Funktion frageNachNameBestaetigt weitergegeben, damit das eingegebene c zum Bestaetigen nicht im Folgenden mituebergeben wird
+	name=$(frageNachNameBestaetigt)
+fi
+}
