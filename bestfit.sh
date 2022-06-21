@@ -27,17 +27,26 @@ function insertBestFit(){
         if [[ -z "${save_speicher[$i]}" ]]; then #Wenn die i-te Stelle im Speicher leer ist
             seekCounter=$(($seekCounter+1)) #Aufeinander folgende leere Plätze werden hochgezählt
         else
+            if [[ $seekCounter -gt 0 ]]; then
+                potentialStart[$bereicheStelle]=$(($i-$seekCounter))
+                potentialEnd[$bereicheStelle]=$(($i-1))
+                bereicheStelle=$(($bereicheStelle+1))
+            fi
 	    seekCounter=0
         fi
     done
 
     if [[ $seekCounter -gt 0 ]] && [[ $i -eq $save_speicherplatz ]]; then
-	potentialStart+=$(($i-$seekCounter))
-	potentialEnd+=$save_speicherplatz
+	potentialStart[$bereicheStelle]=$(($i-$seekCounter))
+	potentialEnd[$bereicheStelle]=$save_speicherplatz
     fi
 
+    echo "${#potentialStart[*]} Potentialdaten"
+    echo "Starts: ${potentialStart[*]}"
+    echo " Enden: ${potentialEnd[*]}"
+
     kleinsteDifferenz=$(($save_speicherplatz+1))
-    for (( i=0; i<${#potentialStart}; i++ ))
+    for (( i=0; i<${#potentialStart[*]}; i++ ))
     do
 	#echo "pE: ${potentialEnd[$i]} ;;; pS: ${potentialStart[$i]}"
 	for (( y=${potentialEnd[$i]}; y>=${potentialStart[$i]}; y-- ))
@@ -67,15 +76,16 @@ function insertBestFit(){
 
 
 #    echo "--------"
-#    echo "Speicher:"
-#    unset $speicherout
-#    for (( i=0; i<$save_speicherplatz; i++ ))
-#    do
-#        if [[ -z "${save_speicher[$i]}" ]]; then
-#        $speicherout[$i]="X"
-#        else
-#        $speicherout[$i]=${save_speicher[$i]}
-#        fi
-#    done
+    echo "Speicher:"
+    unset speicherout
+    for (( i=0; i<$save_speicherplatz; i++ ))
+    do
+        if [[ -z "${save_speicher[$i]}" ]]; then
+        speicherout[$i]="X"
+        else
+        speicherout[$i]=${save_speicher[$i]}
+        fi
+    done
+    echo ${speicherout[*]}
     return 1 #Erfolgreich -> Raus
 }

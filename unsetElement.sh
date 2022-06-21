@@ -19,3 +19,4 @@ function unsetElement(){
 	fi
     done
     return 0 #Element mit dem namen nicht gefunden
+}
