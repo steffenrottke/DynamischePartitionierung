@@ -43,7 +43,7 @@ simulationssteuerung () {
                 #Die Speicherbelegung wird nun ausgegeben
                 echo "Die Speicherbelegung sieht wie folgt aus: "
                 #Visuelle Ausgabe des Speichers und die Informationen zur Speicherbelegung
-		./darstellung.sh
+		./ausgabetest.sh
 		;;
 	#Wenn der Befehl delete gewaehlt wurde, wird nun gefragt, wie der zu loeschende Partitionsname ist
 	"d")
@@ -65,7 +65,7 @@ simulationssteuerung () {
                 #Ausgabe der Speicherbelegung
                 echo "Die Speicherbelegung sieht wie folgt aus: "
                 #Visuelle Ausgabe des Speichers und die Informationen zur Speicherbelegung
-		./darstellung.sh
+		./ausgabetest.sh
 		;;
 	#Wenn der Befehl new gewaehlt wurde, wird nun ausgegeben, dass die Speicherbelegung zurueckgesetzt wurde und die jetzige Speicherbelegung wird ausgegeben
         "n")
@@ -74,14 +74,14 @@ simulationssteuerung () {
 		#Ausgabe der Speicherbelegung
                 echo "Die Speicherbelegung wurde zurueckgesetzt. Sie sieht jetzt wie folgt aus: "
 		#Visuelle Ausgabe des Speichers und die Informationen zur Speicherbelegung
-		./darstellung.sh
+		./ausgabetest.sh
 		;;
 	#Wenn keiner der drei vorherigen Befehle eingegeben wurde, wird eine Fehlermeldung ausgegeben und die derzeitige Speicherbelegung
         *)
                 echo "Es wurde ein ungueltiger Befehl eingegeben."
                 echo "Die Speicherbelegung sieht wie folgt aus: "
                 #Visuelle Ausgabe des Speichers und die Informationen zur Speicherbelegung
-		./darstellung.sh
+		./ausgabetest.sh
 		;;
         esac
 }
