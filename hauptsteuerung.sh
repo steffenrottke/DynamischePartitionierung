@@ -6,7 +6,7 @@ source ./firstfit.sh
 source ./bestfit.sh
 source ./nextfit.sh
 source ./worstfit.sh
-source ./random.sh
+source ./randomfit.sh
 source ./lastfit.sh
 
 #Benutzer wird aufgefordert, eine Gesamtspeichergroesse zu waehlen
