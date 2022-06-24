@@ -6,8 +6,6 @@ function insertRandomFit(){
     summe=0 #Hier wird die Summe der belegten Speicherblöcke hinterlegt
     unset bereiche
 
-    #echo ">>>Das ist seekName: $seekName ;;; Das ist seekGroesse: $(($seekGroesse))"
-
     for i in ${save_groesse[@]} #Durch alle Array Inhalte vom Array groesse loopen
     do
 	let summe+=$i
@@ -25,7 +23,6 @@ function insertRandomFit(){
         if [[ -z "${save_speicher[$i]}" ]]; then #Wenn die i-te Stelle im Speicher leer ist
             seekCounter=$(($seekCounter+1)) #Aufeinander folgende leere Plätze werden hochgezählt
             if [[ $seekCounter -ge $seekGroesse ]]; then #Wenn der counter der leeren Plätze größer/gleich der unterzubnrGröße 
-        	    #Freier Bereich gefunden -> Abspeichern
         	    bereiche[$bereicheStelle]=$(($i-($seekCounter-1))) #Start vom freien Bereich
         	    bereicheStelle=$((bereicheStelle+1)) #Bereiche-Array+1
         	    seekCounter=$((seekCounter-1))
@@ -49,17 +46,5 @@ function insertRandomFit(){
     counter=0
     fi
 
-
-#echo "Speicher:"
-#unset $speicherout
-#for (( i=0; i<$save_speicherplatz; i++ ))
-#do
-#    if [[ -z "${save_speicher[$i]}" ]]; then
-#    $speicherout[$i]="X"
-#    else
-#    $speicherout[$i]=${save_speicher[$i]}
-#    fi
-#done
-
-    return 1 #Erfolgreich -> Raus
+    return 1
 }

@@ -5,8 +5,6 @@ function insertFirstFit(){
     seekGroesse=$3 #die zu speichernde Groesse des Prozesses
     summe=0 #Hier wird die Summe der belegten Speicherblöcke hinterlegt
 
-    #echo ">>>Das ist seekName: $seekName ;;; Das ist seekGroesse: $seekGroesse"
-
     for i in ${save_groesse[@]} #Durch alle Array Inhalte vom Array groesse loopen
     do
 	let summe+=$i
@@ -22,31 +20,19 @@ function insertFirstFit(){
     do
 	if [[ -z "${save_speicher[$i]}" ]]; then #Wenn die i-te Stelle im Speicher leer ist
 	    seekCounter=$(($seekCounter+1)) #Aufeinander folgende leere Plätze werden hochgezählt
-	    #echo "Bin bei $i und habe $seekCounter freie Plaetze gefunden. Speichere jetzt Wert $seekGroesse ab."
-	    if [[ $seekCounter -ge $seekGroesse ]]; then #Wenn der counter der leeren Plätze größer/gleich der unterzubnrGröße 
-		index=$(($i-($seekCounter-1)))
-		for (( y=$index; y<$(($index+$seekGroesse)); y++ ))
+	    if [[ $seekCounter -ge $seekGroesse ]]; then #Wenn der Counter der leeren Plätze größer/gleich der zu Speichernden Größe ist
+		index=$(($i-($seekCounter-1))) #Startposition festlegen
+		for (( y=$index; y<$(($index+$seekGroesse)); y++ )) #Die Schleife X-Mal durchlaufen (größenabhängig)
 		do
-		    save_speicher[$y]=$seekGroesse
+		    save_speicher[$y]=$seekGroesse #$seekGroesse in das Array einfügen
 		done
-		save_groesse[$index]=$seekGroesse #Größe an der Stelle im Array einfügen
-		save_name[$index]=$seekName #Name an der Stelle im Array einfügen
+		save_groesse[$index]=$seekGroesse #Größe an der Stelle $index im Array einfügen
+		save_name[$index]=$seekName #Name an der Stelle $index im Array einfügen
 		break
 	    fi
 	else
-	    seekCounter=0
+	    seekCounter=0 #Counter resetten
 	fi
     done
-
-#    echo "Speicher:"
-#    echo ${save_speicher[*]}
-#    echo "--------"
-#    echo "--------"
-#    echo "Groesse:"
-#    echo ${save_groesse[*]}
-#    echo "++++++++"
-#    echo "++++++++"
-#    echo "Name:"
-#    echo ${save_name[*]}
-    return 1 #Erfolgreich -> Ciao!
+    return 1
 }

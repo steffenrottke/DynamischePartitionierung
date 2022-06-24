@@ -20,14 +20,13 @@ function insertLastFit(){
     do
 	if [[ -z "${save_speicher[$i]}" ]]; then #Wenn die i-te Stelle im Speicher leer ist
 	    seekCounter=$(($seekCounter+1)) #Aufeinander folgende leere Plätze werden hochgezählt
-	    if [[ $seekCounter -ge $seekGroesse ]]; then #Wenn der counter der leeren Plätze größer/gleich der unterzubnrGröße 
+	    if [[ $seekCounter -ge $seekGroesse ]]; then #Wenn der counter der leeren Plätze größer/gleich der unterzubnrGröße
 		index=$(($i+$seekGroesse-1))
-		useless=1
-		for (( y=$index; $useless<=$seekGroesse; y--))
+		LFCounter=1
+		for (( y=$index; $LFCounter<=$seekGroesse; y--)) #Schleife von hinten durchlaufen
 		do
-		    #echo "index: $index ;;; useless: $useless ;;; sG: $seekGroesse ;;; y: $y"
 		    save_speicher[$y]=$seekGroesse
-		    useless=$((useless+1))
+		    LFCounter=$((LFCounter+1))
 		done
 		save_groesse[$index]=$seekGroesse #Größe an der Stelle im Array einfügen
 		save_name[$index]=$seekName #Name an der Stelle im Array einfügen
@@ -37,16 +36,5 @@ function insertLastFit(){
 	    seekCounter=0
 	fi
     done
-
-#    echo "Speicher:"
-#    unset $speicherout
-#    for (( i=0; i<$save_speicherplatz; i++ ))
-#    do
-#        if [[ -z "${save_speicher[$i]}" ]]; then
-#        $speicherout[$i]="X"
-#        else
-#        $speicherout[$i]=${save_speicher[$i]}
-#        fi
-#    done
-    return 1 #Erfolgreich -> Ciao!
+    return 1
 }

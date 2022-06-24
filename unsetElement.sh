@@ -15,8 +15,9 @@ function unsetElement(){
 		counter=$(($counter+1))
 	    done
 	    save_groesse[$i]=
-	    return 1 #hat geklappt
+	    return 1
 	fi
     done
-    return 0 #Element mit dem namen nicht gefunden
+    echo "Das Element mit dem Namen $delName konnte nicht gefunden werden!" #Sofern das Element nicht gefunden wurde kommt diese Ausgabe
+    return 0
 }

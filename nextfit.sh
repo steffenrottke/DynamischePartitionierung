@@ -5,8 +5,6 @@ function insertNextFit(){
     seekGroesse=$3 #die zu speichernde Groesse des Prozesses
     summe=0 #Hier wird die Summe der belegten Speicherblöcke hinterlegt
 
-    #echo ">>>Das ist seekName: $seekName ;;; Das ist seekGroesse: $seekGroesse"
-
     for i in ${save_groesse[@]} #Durch alle Array Inhalte vom Array groesse loopen
     do
 	let summe+=$i
@@ -25,7 +23,6 @@ function insertNextFit(){
 	    seekCounter=$((seekCounter+1)) #Aufeinander folgende leere Plätze werden hochgezählt
 	    if [[ $seekCounter -ge $seekGroesse ]]; then #Wenn der counter der leeren Plätze größer/gleich der unterzubnrGröße 
 		index=$(($i-($seekCounter-1)))
-		#groesse[$index]=$seekGroesse #Größe an der Stelle im Array einfügen
 		for (( y=$index; y<$(($index+$seekGroesse)); y++ ))
 		do
 		    save_speicher[$y]=$seekGroesse
@@ -44,26 +41,5 @@ function insertNextFit(){
 	    seekCounter=0
 	fi
     done
-
-#echo "Speicher:"
-#echo ${save_speicher[*]}
-#echo "--------"
-#echo "--------"
-#echo "Groesse:"
-#echo ${save_groesse[*]}
-#echo "++++++++"
-#echo "++++++++"
-#echo "Name:"
-#echo ${save_name[*]}
-#    echo "Speicher:"
-#    unset $speicherout
-#    for (( i=0; i<$save_speicherplatz; i++ ))
-#    do
-#        if [[ -z "${save_speicher[$i]}" ]]; then
-#        $speicherout[$i]="X"
-#        else
-#        $speicherout[$i]=${save_speicher[$i]}
-#        fi
-#    done
-    return 1 #Erfolgreich -> Ciao!
+    return 1
 }
