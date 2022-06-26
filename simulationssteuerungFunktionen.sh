@@ -1,57 +1,148 @@
 #!/bin/bash
 
-#Funktion zum ueberpruefen, dass keine Zeichen in der Eingabe vorhanden sind, die Eingabe mit c bestaetigt wurde und die Eingabe groesser 0 ist
+#Funktion fuer die Partitionen zum Ueberpruefen, dass keine Zeichen in der Eingabe vorhanden sind, die Eingabe mit c bestaetigt wurde und die Eingabe groesser 0 ist
 keineZeichenBestaetigtGroesserNull () {
 	if [ ! -n "$(printf '%s\n' "${groesse/ c*/}" | sed 's/[0-9]//g')" ] && [[ "$groesse" =~ " c" ]] && [[ ${groesse/ c*/} -gt 0 ]]; then
 		echo ${groesse/ c*/}
 	fi
 }
 
-#Funktion zum ueberpruefen, dass keine Zeichen vorhanden sind, die Eingabe bestaetigt wurde, aber die Eingabe nicht groesser als 0 ist
+#Funktion fuer die Partitionen zum Ueberpruefen, dass keine Zeichen vorhanden sind, die Eingabe bestaetigt wurde, aber die Eingabe nicht groesser als 0 ist
 keineZeichenBestaetigtNichtGroesserNull () {
 	if [ ! -n "$(printf '%s\n' "${groesse/ c*/}" | sed 's/[0-9]//g')" ] && [[ "$groesse" =~ " c" ]] && [[ ! ${groesse/ c*/} -gt 0 ]]; then
 		echo 'Die Eingabe ist nicht groesser als 0. Bitte geben Sie erneut eine Groesse ein und bestaetigen sie mit " c".'
 	fi
 }
 
-#Funktion zum ueberpruefen, dass keine Zeichen vorhanden sind, die Eingabe aber nicht bestaetigt wurde, aber groesser als 0 ist
+#Funktion fuer die Partitionen zum Ueberpruefen, dass keine Zeichen vorhanden sind, die Eingabe nicht bestaetigt wurde, aber groesser als 0 ist
 keineZeichenNichtBestaetigtGroesserNull () {
 	if [ ! -n "$(printf '%s\n' "$groesse" | sed 's/[0-9]//g')" ] && [[ ! "$groesse" =~ " c" ]] && [[ $groesse -gt 0 ]]; then
 		echo  'Die Eingabe wurde nicht mit c bestaetigt. Bitte geben Sie erneut eine Groesse ein und bestaetigen Sie mit " c".'
 	fi
 }
 
-#Funktion zum ueberpruefen, dass keine Zeichen vorhanden sind, die Eingabe aber nicht bestaetigt wurde und nicht groesser als 0 ist
+#Funktion fuer die Partitionen zum Ueberpruefen, dass keine Zeichen vorhanden sind, die Eingabe aber nicht bestaetigt wurde und nicht groesser als 0 ist
 keineZeichenNichtBestaetigtNichtGroesserNull () {
 	if [ ! -n "$(printf '%s\n' "$groesse" | sed 's/[0-9]//g')" ] && [[ ! "$groesse" =~ " c" ]] && [[ ! $groesse -gt 0 ]]; then
 		echo  'Die Eingabe wurde nicht mit c bestaetigt und ist nicht groesser als 0. Bitte geben Sie erneut eine Groesse ein und bestaetigen Sie mit " c".'
 	fi
 }
 
-#Funktion zum ueberpruefen, dass weitere Zeichen ausser Zahlen enthalten sind, die Eingabe aber bestaetigt wurde
+#Funktion fuer die Partitionen zum Ueberpruefen, dass weitere Zeichen ausser Zahlen enthalten sind, die Eingabe aber bestaetigt wurde
 zeichenBestaetigt () {
 	if [ -n "$(printf '%s\n' "${groesse/ c*/}" | sed 's/[0-9]//g')" ] && [[ "$groesse" =~ " c" ]]; then
 		echo 'Die Eingabe enthaelt noch andere Zeichen ausser Zahlen. Bitte geben Sie erneut eine Groesse ein und bestaetigen Sie mit " c".'
 	fi
 }
 
-#Funktion zum ueberpruefen, dass weitere Zeichen ausser Zahlen enthalten sind und die Eingabe nicht bestaetigt wurde
+#Funktion fuer die Partitionen zum Ueberpruefen, dass weitere Zeichen ausser Zahlen enthalten sind und die Eingabe nicht bestaetigt wurde
 zeichenNichtBestaetigt () {
 	if [ -n "$(printf '%s\n' "$groesse" | sed 's/[0-9]//g')" ] && [[ ! "$groesse" =~ " c" ]]; then
 		echo 'Die Eingabe enthaelt noch andere Zeichen ausser Zahlen und wurde nicht mit c bestaetigt. Bitte geben Sie erneut eine Groesse ein und bestaetigen Sie mit " c".'
 	fi
 }
 
-#Funktion zum ueberpruefen, dass der eingegebene Name bestaetigt wurde
+#Funktion fuer die Partitionen zum Ueberpruefen, dass der eingegebene Name bestaetigt wurde
 frageNachNameBestaetigt () {
 	if [[ "$name" =~ " c" ]]; then
-	echo ${name/ c*/}
+		echo ${name/ c*/}
 	fi
 }
 
-#Funktion zum ueberpruefen, dass der eingegebene Name nicht bestaetigt wurde
+#Funktion fuer die Partitionen zum Ueberpruefen, dass der eingegebene Name nicht bestaetigt wurde
 frageNachNameNichtBestaetigt () {
 	if [[ ! "$name" =~ " c" ]]; then
-	echo 'Die Eingabe wurde nicht mit c bestaetigt, bitte geben Sie erneut einen Namen ein und bestaetigen Sie mit " c".'
+		echo 'Die Eingabe wurde nicht mit c bestaetigt, bitte geben Sie erneut einen Namen ein und bestaetigen Sie mit " c".'
 	fi
+}
+
+#Funktion fuer den Gesamtspeicher zum Ueberpruefen, dass die eingegebene Groesse groesser null ist und keine anderen Zeichen ausser Zahlen enthaelt
+keineZeichenGroesserNull () {
+	if [ ! -n "$(printf '%s\n' "$speichergroesse" | sed 's/[0-9]//g')" ] && [[ $speichergroesse -gt 0 ]]; then
+                echo $speichergroesse
+	fi
+}
+
+#Funktion fuer den Gesamtspeicher zum Ueberpruefen, dass die eingegebene Groesse nicht groesser null ist und keine anderen Zeichen ausser Zahlen enthaelt
+keineZeichenNichtGroesserNull () {
+	if [ ! -n "$(printf '%s\n' "$speichergroesse" | sed 's/[0-9]//g')" ] && [[ ! $speichergroesse -gt 0 ]]; then
+                echo 'Die Eingabe ist nicht groesser als 0. Bitte geben Sie erneut eine Groesse ein.'
+        fi
+}
+#Funktion fuer den Gesamtspeicher zum Ueberpruefen, dass die Eingabe andere Zeichen ausser Zahlen enthaelt
+zeichen () {
+	if [ -n "$(printf '%s\n' "$speichergroesse" | sed 's/[0-9]//g')" ]; then
+                echo 'Die Eingabe enthaelt noch andere Zeichen ausser Zahlen. Bitte geben Sie erneut eine Groesse ein.'
+        fi
+}
+
+#Funktion fuer das Realisierungskonzept zum Ueberpruefen, dass die Eingabe kein gueltiges Realisierungskonzept enthaelt
+ungueltigesRealisierungskonzept () {
+	if ! { [ "$konzept" = "f" ] || [ "$konzept" = "b" ] || [ "$konzept" = "n" ] || [ "$konzept" = "w" ] || [ "$konzept" = "r" ] || [ "$konzept" = "l" ]; }; then
+		echo "Die Eingabe enthaelt nicht eins der sechs aufgelisteten Realisierungskonzepte. Bitte waehlen Sie erneut ein Realisierungskonzept aus."
+	fi
+}
+
+#Funktion fuer den Ablauf des Realisierungskonzepts, die ueberprueft, dass kein q eingegeben wurde und daher solange die Simulationssteuerung neu startet, indem die Funktion simulationssteuerung der Datei ./simulationssteuerung.sh wiederholt aufgerufen wird. Dieser wird der Wert befehl uebergeben
+ablaufRealisierungskonzept () {
+	source ./simulationssteuerung.sh
+	if [ ! "$befehl" = "q" ]; then
+		simulationssteuerung befehl
+	fi
+}
+
+#Funktion zum Ueberpruefen, welcher Befehl der Simulationssteuerung ausgefuehrt werden soll
+abfrageAktion () {
+echo ""
+echo ""
+#Benutzer kann zwischen den Befehlen mit den Shortcuts d,c,n und q auswaehlen
+echo "Bitte geben Sie einen Befehl ein. Es stehen diese Befehle zur Verfuegung:
+-> d (delete, Partition loeschen)
+-> c (create, Partition anlegen)
+-> n (new, Speicherbelegeung zuruecksetzen)
+-> q (quit, Simulation beenden)"
+}
+
+#Funktion, um gesamten Speicher zurueckzusetzen
+speicherZuruecksetzen () {
+	unset save_name
+	unset save_groesse
+	unset save_speicher
+}
+
+#Funktion zum Ueberpruefen, dass zwei Partitionen nicht gleich benannt werden koennen
+pruefenAufGleichenNamen () {
+	#Uebergebene Werte
+	partitionsName=$1
+	array="${save_name[@]}"
+
+	#Alle Array-Elemente werden durchgegangen
+	for i in "${array[@]}";
+	do
+		#Es wird solange nach einem Namen fuer die Partition gefragt, bis ein noch nicht vergebener eingegeben wurde
+		while [[ "$i" =~ "$partitionsName" ]]
+		do
+			pruefungName partitionsName
+			#Der neu eingegebene Name wird zum neuen Partitionsnamen
+			partitionsName=$name
+			#Der Partitionsname wird zu createPartitionsName
+			createPartitionsName=$partitionsName
+		done
+	done
+}
+
+#Funktion zum Ueberpruefen, dass ein Partitionsname nicht doppelt vergeben wird -> wird fuer Funktion pruefenAufGleichenNamen benoetigt
+pruefungName () {
+if [[ "$i" =~ "$partitionsName" ]]; then
+        echo 'Mit diesem Namen wurde bereits eine andere Partition benannt. Bitte geben Sie erneut einen Namen ein und bestaetigen Sie mit " c".'
+	read -r name
+	#Der neu eingegebene Name wird ueberprueft, ob er mit einem c bestaetigt wurde
+        while [[ ! "$name" =~ " c" ]]
+	do
+		frageNachNameNichtBestaetigt name
+		read -r name
+	done
+	#Der Name wird an die Funktion frageNachNameBestaetigt weitergegeben, damit das eingegebene c zum Bestaetigen nicht im Folgenden mituebergeben wird
+	name=$(frageNachNameBestaetigt)
+fi
 }
