@@ -1,5 +1,5 @@
 #!/bin/bash
-function insertLastFit(){
+function insertRandomFit(){
     save_speicherplatz=$1
     seekName=$2 #der zu speichernde Name des Prozesses
     seekGroesse=$3 #die zu speichernde Groesse des Prozesses
@@ -33,17 +33,17 @@ function insertLastFit(){
     done
     bbereiche=${#bereiche[@]}
     if [[ $bbereiche -ne 0 ]]; then
-        startAt=${bereiche[-1]}
+        iindex=$(($RANDOM % $bbereiche))
+        startAt=${bereiche[$iindex]}
         counter=0
-	for (( y=$startAt; $counter<$seekGroesse; y++ ))
-	do
-    	    save_speicher[$y]=$seekGroesse
-    	    counter=$((counter+1))
-	done
-	save_groesse[$startAt]=$seekGroesse #Größe an der Stelle im Array einfügen
-	save_name[$startAt]=$seekName #Name an der Stelle im Array einfügen
-	counter=0
+    for (( y=$startAt; $counter<$seekGroesse; y++ ))
+    do
+        save_speicher[$y]=$seekGroesse
+        counter=$((counter+1))
+    done
+    save_groesse[$startAt]=$seekGroesse #Größe an der Stelle im Array einfügen
+    save_name[$startAt]=$seekName #Name an der Stelle im Array einfügen
+    counter=0
     fi
-
     return 1
 }
