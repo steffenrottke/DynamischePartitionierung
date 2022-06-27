@@ -12,6 +12,8 @@ function visualout(){
     unset speicherout_speicher
     unset speicherout_name
     unset speicherout_groesse
+    unset vo_groessterblock
+    unset vo_kleinsterblock
     vo_belegterblock=0
     vo_kleinsterblock=$(($vo_max+1))
 
@@ -20,17 +22,6 @@ function visualout(){
 	let vo_belegterblock+=$i
     done
 
-    for (( i=0; i<$vo_max; i++ ))
-    do
-        if [[ -z "${vo_speicher[$i]}" ]]; then
-		speicherout_speicher[$i]="X"
-	else
-		speicherout_speicher[$i]=${vo_speicher[$i]}
-	fi
-    done
-
-echo "++++++++++"
-unset $speicherout
 echo "Speicher:"
 for (( i=0; i<$save_speicherplatz; i++ ))
 do
@@ -61,6 +52,11 @@ do
 	fi
     fi
 done
+
+if [[ $vo_kleinsterblock -eq $(($save_speicherplatz+1)) ]]; then
+    unset vo_kleinsterblock
+fi
+
 echo ${speicherout[*]}
 echo "++++++++++"
     echo "----------"
@@ -75,7 +71,6 @@ echo "++++++++++"
 
     echo ""
     echo "++++++++++"
-    echo "Speicherstatus:"
     echo "Belegung: $vo_belegterblock von $vo_max"
     echo "Anzahl belegte Blöcke: $vo_belegterblock"
     echo "Anzahl freie Blöcke: $(($vo_max-$vo_belegterblock))"
