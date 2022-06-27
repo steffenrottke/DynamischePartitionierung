@@ -15,7 +15,6 @@ function unsetElement(){
 		    counter=$(($counter+1))
     		done
     		save_groesse[$i]=
-		visualout
     		return 1
 	    fi
 	done
